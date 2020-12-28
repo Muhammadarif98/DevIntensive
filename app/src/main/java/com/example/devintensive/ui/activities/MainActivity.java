@@ -7,7 +7,7 @@ import android.os.Bundle;
 import com.example.devintensive.R;
 
 public class MainActivity extends AppCompatActivity {
-
+String mString = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
