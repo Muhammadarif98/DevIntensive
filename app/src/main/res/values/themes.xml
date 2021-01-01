@@ -35,7 +35,7 @@
         <item name="android:fullDark">@android:color/transparent</item>
     </style>
 
-    <style name="Theme.AppCompat.NoActionBar">
+    <style name="Theme.DevIntensive.NoActionBar">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar">false</item>
     </style>
