@@ -16,6 +16,7 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar_layout"
             android:theme="@style/Theme.AppCompat.AppBarOverlay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -465,10 +466,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
-                            <TextView
+                            <EditText
                                 android:id="@+id/osebe"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
+                                android:layout_height="80dp"
                                 android:background="@color/white"
                                 android:enabled="false"
                                 android:focusable="false"
@@ -476,23 +477,28 @@
                                 android:gravity="start"
                                 android:hint="О себе"
                                 android:inputType="textEmailAddress"
+                                android:text="@string/decdription"
                                 android:textColor="@color/black"
                                 android:textColorHint="@color/grey" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/spacing_small_8"
-                                android:fontFamily="sans-serif-condensed"
-                                android:text="@string/decdription"
-                                android:textColor="@color/black">
-
-                            </TextView>
                         </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+           android:id="@+id/floatAction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/spacing_normal_16"
+            android:src="@drawable/ic_baseline_create_24"
+            app:layout_anchor="@id/appbar_layout"
+            app:layout_anchorGravity="bottom|right">
+
+        </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.navigation.NavigationView
