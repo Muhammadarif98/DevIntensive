@@ -80,13 +80,14 @@ public class MainActivity extends BaseActivity {
         setupToolBar();
         setupDrawer();
 
-        mCurrentEditMode = savedInstanceState.getInt(ConstantManager.EDIT_MODE_KEY,0);
-        changeEditMode(mCurrentEditMode);
+
 
         if (savedInstanceState == null) {
 //            showSnackbar("активити запускается впервые");
 //            showToast("активити запускается впервые");
         } else {
+            mCurrentEditMode = savedInstanceState.getInt(ConstantManager.EDIT_MODE_KEY,0);
+            changeEditMode(mCurrentEditMode);
 //            showSnackbar("активити уже создавалось");
 //            showToast("активити уже создавалось");
         }
