@@ -83,13 +83,13 @@ public class MainActivity extends BaseActivity {
 
 
         if (savedInstanceState == null) {
-//            showSnackbar("активити запускается впервые");
-//            showToast("активити запускается впервые");
+            showSnackbar("активити запускается впервые");
+            showToast("активити запускается впервые");
         } else {
             mCurrentEditMode = savedInstanceState.getInt(ConstantManager.EDIT_MODE_KEY,0);
             changeEditMode(mCurrentEditMode);
-//            showSnackbar("активити уже создавалось");
-//            showToast("активити уже создавалось");
+            showSnackbar("активити уже создавалось");
+            showToast("активити уже создавалось");
         }
 
         mCallImg.setOnClickListener(new View.OnClickListener() {
@@ -143,12 +143,14 @@ public class MainActivity extends BaseActivity {
 
     private void changeEditMode(int mode) {
         if (mode == 1) {
+            mFloatingActionButton.setImageResource(R.drawable.ic_baseline_done_24);
             for (EditText userValue : mUserInfo) {
                 userValue.setEnabled(true);
                 userValue.setFocusable(true);
                 userValue.setFocusableInTouchMode(true);
             }
         }else{
+            mFloatingActionButton.setImageResource(R.drawable.ic_baseline_create_24);
             for (EditText userValue : mUserInfo) {
                 userValue.setEnabled(false);
                 userValue.setFocusable(false);
