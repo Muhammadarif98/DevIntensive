@@ -17,6 +17,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.devintensive.R;
+import com.example.devintensive.data.managers.DataManager;
 import com.example.devintensive.utils.ConstantManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -27,15 +28,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends BaseActivity {
-    private int mCurrentEditMode = 0;
+
     private static final String TAG = ConstantManager.TAG_PREFIX + "MainActivity";
+
+    private DataManager mDataManager;
+
+    private int mCurrentEditMode = 0;
+
     private ImageView mCallImg;
     private CoordinatorLayout mCoordinatorLayout;
     private Toolbar mToolbar;
     private DrawerLayout mDrawerLayout;
     private FloatingActionButton mFloatingActionButton;
+
     private EditText mUserPhone, mUserMail, mUserVk, mUserGit, mUserBio;
-    private List<EditText> mUserInfo;
+    private List<EditText> mUserInfoViews;
 
 
     @Override
@@ -44,6 +51,7 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         Log.d(TAG, "OnCreate");
 
+        mDataManager = DataManager.getInstance();
         mCallImg = findViewById(R.id.call_img);
         mCoordinatorLayout = findViewById(R.id.main_coordinator_container);
         mToolbar = findViewById(R.id.toolbar);
@@ -55,12 +63,12 @@ public class MainActivity extends BaseActivity {
         mUserVk = findViewById(R.id.vk);
         mUserBio = findViewById(R.id.osebe);
 
-        mUserInfo = new ArrayList<>();
-        mUserInfo.add(mUserPhone);
-        mUserInfo.add(mUserMail);
-        mUserInfo.add(mUserGit);
-        mUserInfo.add(mUserVk);
-        mUserInfo.add(mUserBio);
+        mUserInfoViews = new ArrayList<>();
+        mUserInfoViews.add(mUserPhone);
+        mUserInfoViews.add(mUserMail);
+        mUserInfoViews.add(mUserGit);
+        mUserInfoViews.add(mUserVk);
+        mUserInfoViews.add(mUserBio);
 
 
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -79,17 +87,18 @@ public class MainActivity extends BaseActivity {
         });
         setupToolBar();
         setupDrawer();
+        loadUserInfoValue();
 
-
+        List<String> test = mDataManager.getPreferenceManager().loadUsersProfileData();
 
         if (savedInstanceState == null) {
-            showSnackbar("активити запускается впервые");
-            showToast("активити запускается впервые");
+//            showSnackbar("активити запускается впервые");
+//            showToast("активити запускается впервые");
         } else {
             mCurrentEditMode = savedInstanceState.getInt(ConstantManager.EDIT_MODE_KEY,0);
             changeEditMode(mCurrentEditMode);
-            showSnackbar("активити уже создавалось");
-            showToast("активити уже создавалось");
+//            showSnackbar("активити уже создавалось");
+//            showToast("активити уже создавалось");
         }
 
         mCallImg.setOnClickListener(new View.OnClickListener() {
@@ -144,28 +153,36 @@ public class MainActivity extends BaseActivity {
     private void changeEditMode(int mode) {
         if (mode == 1) {
             mFloatingActionButton.setImageResource(R.drawable.ic_baseline_done_24);
-            for (EditText userValue : mUserInfo) {
+            for (EditText userValue : mUserInfoViews) {
                 userValue.setEnabled(true);
                 userValue.setFocusable(true);
                 userValue.setFocusableInTouchMode(true);
             }
         }else{
             mFloatingActionButton.setImageResource(R.drawable.ic_baseline_create_24);
-            for (EditText userValue : mUserInfo) {
+            for (EditText userValue : mUserInfoViews) {
                 userValue.setEnabled(false);
                 userValue.setFocusable(false);
                 userValue.setFocusableInTouchMode(false);
+                saveUserInfoValue();
             }
 
         }
     }
 
     private void loadUserInfoValue() {
-
+        List<String> userData = mDataManager.getPreferenceManager().loadUsersProfileData();
+        for (int i = 0; i < userData.size(); i++){
+            mUserInfoViews.get(i).setText(userData.get(i));
+        }
     }
 
     private void saveUserInfoValue() {
-
+        List<String> userData = new ArrayList<>();
+        for (EditText userFieldViews : mUserInfoViews) {
+            userData.add(userFieldViews.getText().toString());
+        }
+        mDataManager.getPreferenceManager().saveUsersProfileData(userData);
     }
 
 }
